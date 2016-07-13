@@ -1,0 +1,18 @@
+{
+  "name": "ts-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "route-matcher": "^0.1.0",
+    "snabbdom": "^0.5.0",
+    "snabbdom-jsx": "^0.3.0",
+    "systemjs": "^0.19.31"
+  }
+}

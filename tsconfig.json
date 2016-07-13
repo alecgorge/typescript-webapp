@@ -1,0 +1,21 @@
+{
+	"compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "rootDir": "src",
+        "outDir": "lib",
+        "target": "es5",
+        "watch": true,
+        "jsx": "react",
+        "reactNamespace": "SnabbdomShim",
+        "module": "system",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
+}

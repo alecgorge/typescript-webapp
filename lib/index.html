@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<base href="/lib/" />
+
+</head>
+<body>
+	<div id="content">
+
+	</div>
+	<script src="/node_modules/systemjs/dist/system.src.js"></script>
+	<script>
+		// set our baseURL reference path
+		SystemJS.config({
+			paths: {
+				'*': '/node_modules/*',
+				'snabbdom': '/node_modules/snabbdom/snabbdom',
+				'route-matcher': '/node_modules/route-matcher/lib/routematcher',
+				'lodash': '/node_modules/lodash/lodash',
+				'snabbdom-jsx': '/node_modules/snabbdom-jsx/snabbdom-jsx',
+				'app/*': '/lib/*'
+			}
+		});
+
+		System.defaultJSExtensions = true;
+
+		// loads /js/main.js
+		SystemJS.import('app/main');
+	</script>
+</body>
+</html>
