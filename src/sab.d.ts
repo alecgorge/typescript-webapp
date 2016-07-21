@@ -39,7 +39,7 @@ declare module "snabbdom-jsx" {
 declare module "route-matcher" {
 	export interface RouteMatcher {
 		parse(route: string) : { [key: string]: string };
-		stringify(params: { [key: string]: string }) : string;
+		stringify(params: Object) : string;
 	}
 
 	export function routeMatcher(route: string | RegExp, validation?: { [key: string]: any }): RouteMatcher; 

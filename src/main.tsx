@@ -1,15 +1,17 @@
 
-import {Router, IView, View, ViewController, SnabbdomShim} from './test';
+import * as UI from './index';
+declare var SnabbdomShim: any;
 
 export interface HomeParams {
 	verbose?: string;
 }
 
-export class HomeViewController extends ViewController<HomeParams> implements IView {
+export class HomeViewController extends UI.ViewController<HomeParams> implements UI.IView {
 	public constructor(params: HomeParams) {
 		super(params);
 
 		this.view = this;
+		this.title = "Home";
 	}
 
 	private night = true;
@@ -27,33 +29,43 @@ export class HomeViewController extends ViewController<HomeParams> implements IV
 
 		return <div>
 			{p}
-			<p><a href="test/alec">go to test?</a></p>
+			<p><a href={router.makeLink(Routes.Test, { "name": "alec"})}>go to test?</a></p>
 		</div>;
 	}
 }
 
-let router = new Router(document.getElementById('content'));
+enum Routes {
+	Index,
+	Home,
+	Test
+}
 
-router.map("/", (p: {}) => {
+let router = new UI.Router(document.getElementById('content'), {
+	navigationType: UI.RouterNavigationType.LocationHash
+});
+
+router.titleFormatter = (router, vc) => vc.title + " – Test Site";
+
+router.map(Routes.Index, "/", (p: {}) => {
 	router.navigateTo('/home', {}, true);
 });
 
-router.map("/home", (routeParams: HomeParams) => {
+router.map(Routes.Home, "/home", (routeParams: HomeParams) => {
 	router.replaceCurrentViewController(new HomeViewController(routeParams));
 });
 
-router.map("/test/:name", (p: { name: string }) => {
-	let vc = new ViewController<{ name: string }>(p);
-	vc.view = new View(() => <p><a href="">go home {vc.params.name}</a></p>);
+router.map(Routes.Test, "/test/:name", (p: { name: string }) => {
+	let vc = new UI.ViewController<{ name: string }>(p);
+	vc.view = new UI.View(() => <p><a href={router.makeLink<{}>(Routes.Index, {})}>go home {vc.params.name}</a></p>);
 
 	router.replaceCurrentViewController(vc);	
 });
 
 router.mapDefault((params: {}) => {
-	let vc = new ViewController<Object>(params);
-	vc.view = new View(() => <p>Not Found</p>);
+	let vc = new UI.ViewController<Object>(params);
+	vc.view = new UI.View(() => <p>Not Found</p>);
 
 	router.replaceCurrentViewController(vc);
 });
 
-router.start(); //location.pathname.substr("/lib".length) + location.search);
+router.start();
